@@ -1,0 +1,2 @@
+source,rows,columns,pct_missing_key_fields,duplicate_rows,pct_rows_with_npi,unique_npis,earliest_date,latest_date
+Open Payments,5000,91,0.2,0,99.8,2085,2024-01-01,2024-12-31
