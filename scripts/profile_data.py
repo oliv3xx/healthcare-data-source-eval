@@ -1,14 +1,18 @@
 import pandas as pd
 
-def profile(df, source, key_cols, id_cols, npi_col, date_col):
+def profile(df, source, key_cols, id_cols, npi_col, date_col=None):
     result = {"source": source, "rows": len(df), "columns": df.shape[1]}
     result["pct_missing_key_fields"] = round(df[key_cols].isna().mean().mean() * 100, 1)
     result["duplicate_rows"] = int(df.duplicated(subset=id_cols).sum())
     result["pct_rows_with_npi"] = round(df[npi_col].notna().mean() * 100, 1)
     result["unique_npis"] = int(df[npi_col].nunique())
-    dates = pd.to_datetime(df[date_col], errors="coerce")
-    result["earliest_date"] = dates.min().date()
-    result["latest_date"] = dates.max().date()
+    if date_col:
+        dates = pd.to_datetime(df[date_col], errors="coerce")
+        result["earliest_date"] = dates.min().date()
+        result["latest_date"] = dates.max().date()
+    else:
+        result["earliest_date"] = None
+        result["latest_date"] = None
 
     print(f"\n--- {source} ---")
     for k, v in result.items():
@@ -33,3 +37,19 @@ if __name__ == "__main__":
     op_result = profile(op, "Open Payments", op_key_cols, ["record_id"],
                         "covered_recipient_npi", "date_of_payment")
     pd.DataFrame([op_result]).to_csv("output/profile_open_payments.csv", index=False)
+
+    mc = pd.read_csv("data/medicare_ky.csv", dtype=str)
+    mc_key_cols = [
+        "Rndrng_NPI",
+        "Rndrng_Prvdr_Last_Org_Name",
+        "Rndrng_Prvdr_Type",
+        "Rndrng_Prvdr_City",
+        "Rndrng_Prvdr_Zip5",
+        "Tot_Benes",
+        "Tot_Srvcs",
+        "Tot_Mdcr_Pymt_Amt",
+        "Bene_Avg_Age",
+    ]
+    mc_result = profile(mc, "Medicare Providers", mc_key_cols, ["Rndrng_NPI"],
+                        "Rndrng_NPI")
+    pd.DataFrame([mc_result]).to_csv("output/profile_medicare.csv", index=False)

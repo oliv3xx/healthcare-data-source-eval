@@ -1,0 +1,2 @@
+source,rows,columns,pct_missing_key_fields,duplicate_rows,pct_rows_with_npi,unique_npis,earliest_date,latest_date
+Medicare Providers,19236,81,0.0,0,100.0,19236,,
