@@ -53,3 +53,23 @@ if __name__ == "__main__":
     mc_result = profile(mc, "Medicare Providers", mc_key_cols, ["Rndrng_NPI"],
                         "Rndrng_NPI")
     pd.DataFrame([mc_result]).to_csv("output/profile_medicare.csv", index=False)
+
+    npi = pd.read_csv("data/npi_registry_ky.csv", dtype=str)
+    npi_found = npi[npi["found"] == "True"]
+    npi_key_cols = [
+        "npi",
+        "enumeration_type",
+        "status",
+        "last_name",
+        "credential",
+        "primary_taxonomy",
+        "practice_city",
+        "practice_state",
+        "practice_zip",
+        "last_updated",
+    ]
+    npi_result = profile(npi_found, "NPI Registry", npi_key_cols, ["npi"],
+                        "npi", "last_updated")
+    npi_result["pct_npis_found"] = round(len(npi_found) / len(npi) * 100, 1)
+    print(f"pct_npis_found: {npi_result['pct_npis_found']}")
+    pd.DataFrame([npi_result]).to_csv("output/profile_npi.csv", index=False)

@@ -1,0 +1,2 @@
+source,rows,columns,pct_missing_key_fields,duplicate_rows,pct_rows_with_npi,unique_npis,earliest_date,latest_date,pct_npis_found
+NPI Registry,2080,11,1.0,0,100.0,2080,2007-07-08,2026-11-04,99.8
