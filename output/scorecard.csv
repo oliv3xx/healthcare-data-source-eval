@@ -1,0 +1,4 @@
+source,completeness,completeness_why,joinability,joinability_why,freshness,freshness_why,coverage,coverage_why,sales_value,sales_value_why,weighted_score
+Open Payments,5,"0.2% missing key fields, 0 duplicates",5,99.8% of payments link to an NPI,3,"Annual release, 2024 data (about 1 year behind)",3,Only providers who received industry payments,5,"Names the device company, product and doctor in one row",4.4
+NPI Registry,5,1.0% missing key fields (credential 9.5%),5,99.8% of paid doctors found; NPI is the join key,4,"Updated daily, but 44.3% of records unchanged in 5+ years",5,"Every US provider, any insurance",2,"Directory only: who and where, no buying signal",4.1
+Medicare Providers,5,"0% missing key fields, 0 duplicates",4,"100% NPI, but only 77.8% of paid doctors appear",3,"Annual release, 2024 data (about 1 year behind)",3,Misses NPs and PAs who bill under a supervising doctor,3,"Shows patient volume, but no device or company info",3.65
